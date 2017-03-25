@@ -122,11 +122,35 @@ def separar_versao(versao):
         acm1+=1
     return lista
 #--------------------------------------------------------------
+def plataforma():
+    plataforma_txt = str(input("Plataforma: "))
+    analise = re.search(r'^\w+$',plataforma_txt)
+    if(analise):
+        if(plataforma_valida(plataforma_txt)):
+            return True
+        else:
+            return False
+    else:
+        return False
 
-
+def plataforma_valida(plataforma):
+    teste = plataforma.lower() 
+    if(teste == "windows" or teste == "mac"):
+        return True
+    elif(teste == "linux" or teste == "ios"):
+        return True
+    elif(teste == "android" or teste == "windowsphone"):
+        return True
+    else:
+        return False
+#--------------------------------------------------------------
+#def presente():
+#--------------------------------------------------------------
+    
 #print(login())
 #print(cpf())
 #print(email())
 #print(senha())
 #print(nome_app())
-print(versao_app())
+#print(versao_app())
+#print(plataforma())
