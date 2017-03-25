@@ -214,6 +214,8 @@ def sistema(string):
             break
     if(cont == len(string)):
         return True
+    else:
+        return False
     
 def mandar_informacao(i,string):
     if(i == 0):
@@ -233,6 +235,6 @@ def mandar_informacao(i,string):
     if(i > 6):
         return presente(string)
 
-txt = str(input("Informe a entrada: "))
+txt = str(input())
 string = separar_input(txt)
 print(sistema(string))
