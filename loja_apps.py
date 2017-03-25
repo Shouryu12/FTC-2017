@@ -82,7 +82,58 @@ def email():
     else:
         return False
 #--------------------------------------------------------------
-#def senha():
+def senha():
+    senha_txt = str(input("Senha: "))
+    analise = re.search(r'^\w\w\.\w\w\.\w\w\.\w\w$',senha_txt)
+    if(analise):
+        senha_separada = separar_senha(senha_txt)
+        if(validar_senha(senha_separada)):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def separar_senha(senha):
+    lista = [[],[],[],[]]
+    acm1 = 0
+    for i in range(len(senha)):
+        if(senha[i] != "."):
+            lista[acm1].append(senha[i]);
+        else:
+            acm1 += 1
+    return lista
+
+def validar_senha(senha):
+    cont = 0
+    for i in range(len(senha)):
+        if(checar_numeros(senha[i])):
+            cont += 0
+        else:
+            cont +=1
+    if(cont == 0):
+        return True
+    else:
+        return False
+
+def checar_numeros(senha):
+    primeiro = re.search(r'^[0-9]$',senha[0])
+    segundo1 = re.search(r'^[0-9]$',senha[1])
+    segundo2 = re.search(r'^[a-zA-Z]$',senha[1])
+    if(primeiro):
+        if(segundo1):
+           if(int(senha[0]) != int(senha[1])):
+               return True
+           else:
+               return False
+        elif(segundo2):
+           return True
+    else:
+        return False
+
+def checar_letras(senha):
+
+    
 #--------------------------------------------------------------
 def nome_app():
     nome_txt = str(input("Nome do app: "))
@@ -150,7 +201,8 @@ def plataforma_valida(plataforma):
 #print(login())
 #print(cpf())
 #print(email())
-#print(senha())
+print(senha())
 #print(nome_app())
 #print(versao_app())
 #print(plataforma())
+#print(presente())
