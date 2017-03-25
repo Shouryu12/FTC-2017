@@ -11,7 +11,7 @@ def login():
 def cpf():
     cpf_valido = []
     cpf_txt = str(input("CPF: "))
-    analise = re.search(r'^\d\d\d.\d\d\d.\d\d\d-\d\d$',cpf_txt)
+    analise = re.search(r'^\d\d\d\.\d\d\d\.\d\d\d\-\d\d$',cpf_txt)
     if(analise):
         cpf_valido = formar_lista1(cpf_txt)
         cpf_valido += [ver_primeiro_digito(cpf_valido)]
@@ -76,7 +76,7 @@ def pegar_finais(cpf):
 #--------------------------------------------------------------
 def email():
     email_txt = str(input("E-mail: "))
-    analise = re.search(r'^[\w]+@[^0-9\W]+.[^0-9\W]+$',email_txt)
+    analise = re.search(r'^[\w]+@[^0-9\W_]+\.[^0-9\W_]+$',email_txt)
     if(analise):
         return True
     else:
