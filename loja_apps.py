@@ -1,16 +1,14 @@
 import re
 
-def login():
-    login_txt = str(input("Usuario: "))
+def login(login_txt):
     analise = re.search(r'^[a-z][a-zA-Z]*$',login_txt)
     if(analise):
         return True
     else:
         return False
 #--------------------------------------------------------------
-def cpf():
+def cpf(cpf_txt):
     cpf_valido = []
-    cpf_txt = str(input("CPF: "))
     analise = re.search(r'^\d\d\d\.\d\d\d\.\d\d\d\-\d\d$',cpf_txt)
     if(analise):
         cpf_valido = formar_lista1(cpf_txt)
@@ -74,16 +72,14 @@ def pegar_finais(cpf):
         acm2 +=1
     return lista
 #--------------------------------------------------------------
-def email():
-    email_txt = str(input("E-mail: "))
+def email(email_txt):
     analise = re.search(r'^[\w]+@[^0-9\W_]+\.[^0-9\W_]+$',email_txt)
     if(analise):
         return True
     else:
         return False
 #--------------------------------------------------------------
-def senha():
-    senha_txt = str(input("Senha: "))
+def senha(senha_txt):
     analise = re.search(r'^\w\w\.\w\w\.\w\w\.\w\w$',senha_txt)
     if(analise):
         senha_separada = separar_senha(senha_txt)
@@ -107,10 +103,11 @@ def separar_senha(senha):
 def validar_senha(senha):
     cont = 0
     for i in range(len(senha)):
-        if(checar_numeros(senha[i])):
-            cont += 0
+        if(checar_numeros(senha[i])or checar_letras(senha[i])):
+            cont +=0
         else:
             cont +=1
+            
     if(cont == 0):
         return True
     else:
@@ -132,19 +129,26 @@ def checar_numeros(senha):
         return False
 
 def checar_letras(senha):
-
-    
+    primeiro = re.search(r'^[a-zA-Z]$',senha[0])
+    segundo1 = re.search(r'^[a-zA-Z]$',senha[1])
+    segundo2 = re.search(r'^[0-9]$',senha[1])
+    if(primeiro):
+        if(segundo1):
+            return False
+        elif(segundo2):
+           return True
+    else:
+        return False
+        
 #--------------------------------------------------------------
-def nome_app():
-    nome_txt = str(input("Nome do app: "))
-    analise = re.search(r'^[A-Za-z]$',nome_txt)
+def nome_app(nome_txt):
+    analise = re.search(r'^[A-Za-z]+$',nome_txt)
     if(analise):
         return True
     else:
         return False
 #--------------------------------------------------------------
-def versao_app():
-    versao_txt = str(input("Versao do app: "))
+def versao_app(versao_txt):
     analise = re.search(r'^[0-9]+.[0-9]+$',versao_txt)
     if(analise):
         if(analisar_versao(versao_txt)):
@@ -173,8 +177,7 @@ def separar_versao(versao):
         acm1+=1
     return lista
 #--------------------------------------------------------------
-def plataforma():
-    plataforma_txt = str(input("Plataforma: "))
+def plataforma(plataforma_txt):
     analise = re.search(r'^\w+$',plataforma_txt)
     if(analise):
         if(plataforma_valida(plataforma_txt)):
@@ -185,24 +188,51 @@ def plataforma():
         return False
 
 def plataforma_valida(plataforma):
-    teste = plataforma.lower() 
-    if(teste == "windows" or teste == "mac"):
+    analise = plataforma.lower() 
+    if(analise == "windows" or analise == "mac"):
         return True
-    elif(teste == "linux" or teste == "ios"):
+    elif(analise == "linux" or analise == "ios"):
         return True
-    elif(teste == "android" or teste == "windowsphone"):
+    elif(analise == "android" or analise == "windowsphone"):
         return True
     else:
         return False
 #--------------------------------------------------------------
-#def presente():
+#def presente(string):
 #--------------------------------------------------------------
+def separar_input(txt):
+    analise = re.split(r'\s',txt)
+    return analise
+
+def sistema(string):
+    cont = 0
+    for i in range(len(string)):
+        recebe_info = mandar_informacao(i,string[i])
+        if(recebe_info == True):
+            cont += 1
+        else:
+            break
+    if(cont == len(string)):
+        return True
     
-#print(login())
-#print(cpf())
-#print(email())
-print(senha())
-#print(nome_app())
-#print(versao_app())
-#print(plataforma())
-#print(presente())
+def mandar_informacao(i,string):
+    if(i == 0):
+        return login(string)
+    if(i == 1):
+        return cpf(string)
+    if(i == 2):
+        return email(string)
+    if(i == 3):
+        return senha(string)
+    if(i == 4):
+        return nome_app(string)
+    if(i == 5):
+        return versao_app(string)
+    if(i == 6):
+        return plataforma(string)
+    if(i > 6):
+        return presente(string)
+
+txt = str(input("Informe a entrada: "))
+string = separar_input(txt)
+print(sistema(string))
