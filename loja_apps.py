@@ -12,8 +12,8 @@ def cpf(cpf_txt):
     analise = re.search(r'^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$',cpf_txt)
     if(analise):
         cpf_valido = formar_lista1(cpf_txt)
-        cpf_valido += [ver_primeiro_digito(cpf_valido)]
-        cpf_valido += [ver_segundo_digito(cpf_valido)]
+        cpf_valido.append(ver_primeiro_digito(cpf_valido))
+        cpf_valido.append(ver_segundo_digito(cpf_valido))
         if(pegar_finais(cpf_txt) == pegar_finais(cpf_valido)):
             return True
         else:
@@ -65,15 +65,15 @@ def pegar_finais(cpf):
     acm1 = 0
     acm2 = len(cpf)-2
     limite = 2
-    lista = []
+    lista = ""
     while(acm1 < limite):
-        lista += [cpf[acm2]]
+        lista += cpf[acm2]
         acm1 +=1
         acm2 +=1
-    return lista
+    return int(lista)
 #--------------------------------------------------------------
 def email(email_txt):
-    analise = re.search(r'^[a-z][\w]*@[^0-9\W]*\.[^0-9\W]*$',email_txt)
+    analise = re.search(r'^[a-z][\w.]*@[a-z]*\.[a-z.]*$',email_txt)
     if(analise):
         return True
     else:
@@ -188,7 +188,7 @@ def plataforma(plataforma_txt):
         return False
 
 def plataforma_valida(plataforma):
-    analise = plataforma.lower() 
+    analise = plataforma 
     if(analise == "windows" or analise == "mac"):
         return True
     elif(analise == "linux" or analise == "ios"):
