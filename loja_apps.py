@@ -188,7 +188,7 @@ def plataforma(plataforma_txt):
         return False
 
 def plataforma_valida(plataforma):
-    analise = plataforma 
+    analise = plataforma.lower()
     if(analise == "windows" or analise == "mac"):
         return True
     elif(analise == "linux" or analise == "ios"):
