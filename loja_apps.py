@@ -9,7 +9,7 @@ def login(login_txt):
 #--------------------------------------------------------------
 def cpf(cpf_txt):
     cpf_valido = []
-    analise = re.search(r'^[0-9][0-9][0-9]\.[0-9][0-9][0-9]\.[0-9][0-9][0-9]-[0-9][0-9]$',cpf_txt)
+    analise = re.search(r'^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$',cpf_txt)
     if(analise):
         cpf_valido = formar_lista1(cpf_txt)
         cpf_valido += [ver_primeiro_digito(cpf_valido)]
@@ -42,7 +42,7 @@ def ver_primeiro_digito(lista):
         acm1 +=1
         acm2 -=1
     resto = soma%11
-    if(resto <= 2):
+    if(resto < 2):
         return str(0)
     else:
         return str(11 - resto)
@@ -56,7 +56,7 @@ def ver_segundo_digito(lista):
         acm1 +=1
         acm2 -=1
     resto = soma%11
-    if(resto <= 2):
+    if(resto < 2):
         return str(0)
     else:
         return str(11 - resto)
@@ -73,14 +73,14 @@ def pegar_finais(cpf):
     return lista
 #--------------------------------------------------------------
 def email(email_txt):
-    analise = re.search(r'^[a-z][\w]*@[\w]*\.[\w]*$',email_txt)
+    analise = re.search(r'^[a-z][\w]*@[^0-9\W]*\.[^0-9\W]*$',email_txt)
     if(analise):
         return True
     else:
         return False
 #--------------------------------------------------------------
 def senha(senha_txt):
-    analise = re.search(r'^\w\w\.\w\w\.\w\w\.\w\w$',senha_txt)
+    analise = re.search(r'^[A-F0-9]{2}.[A-F0-9]{2}\.[A-F0-9]{2}\.[A-F0-9]{2}$',senha_txt)
     if(analise):
         senha_separada = separar_senha(senha_txt)
         if(validar_senha(senha_separada)):
@@ -116,7 +116,7 @@ def validar_senha(senha):
 def checar_numeros(senha):
     primeiro = re.search(r'^[0-9]$',senha[0])
     segundo1 = re.search(r'^[0-9]$',senha[1])
-    segundo2 = re.search(r'^[a-zA-Z]$',senha[1])
+    segundo2 = re.search(r'^[a-fA-F]$',senha[1])
     if(primeiro):
         if(segundo1):
            if(int(senha[0]) != int(senha[1])):
@@ -129,8 +129,8 @@ def checar_numeros(senha):
         return False
 
 def checar_letras(senha):
-    primeiro = re.search(r'^[a-zA-Z]$',senha[0])
-    segundo1 = re.search(r'^[a-zA-Z]$',senha[1])
+    primeiro = re.search(r'^[a-fA-F]$',senha[0])
+    segundo1 = re.search(r'^[a-fA-F]$',senha[1])
     segundo2 = re.search(r'^[0-9]$',senha[1])
     if(primeiro):
         if(segundo1):
@@ -195,10 +195,16 @@ def plataforma_valida(plataforma):
         return True
     elif(analise == "android" or analise == "windowsphone"):
         return True
+    return False
+#--------------------------------------------------------------
+def presente(string):
+    if(login(string)):
+        return True
+    elif(email(string)):
+        return True
     else:
         return False
-#--------------------------------------------------------------
-#def presente(string):
+    
 #--------------------------------------------------------------
 def separar_input(txt):
     analise = re.split(r'\s',txt)
