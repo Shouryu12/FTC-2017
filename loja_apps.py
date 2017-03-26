@@ -9,7 +9,7 @@ def login(login_txt):
 #--------------------------------------------------------------
 def cpf(cpf_txt):
     cpf_valido = []
-    analise = re.search(r'^\d\d\d\.\d\d\d\.\d\d\d\-\d\d$',cpf_txt)
+    analise = re.search(r'^[0-9][0-9][0-9]\.[0-9][0-9][0-9]\.[0-9][0-9][0-9]-[0-9][0-9]$',cpf_txt)
     if(analise):
         cpf_valido = formar_lista1(cpf_txt)
         cpf_valido += [ver_primeiro_digito(cpf_valido)]
@@ -73,7 +73,7 @@ def pegar_finais(cpf):
     return lista
 #--------------------------------------------------------------
 def email(email_txt):
-    analise = re.search(r'^[\w]+@[^0-9\W_]+\.[^0-9\W_]+$',email_txt)
+    analise = re.search(r'^[a-z][\w]*@[\w]*\.[\w]*$',email_txt)
     if(analise):
         return True
     else:
@@ -104,7 +104,7 @@ def validar_senha(senha):
     cont = 0
     for i in range(len(senha)):
         if(checar_numeros(senha[i])or checar_letras(senha[i])):
-            cont +=0
+            cont = cont
         else:
             cont +=1
             
@@ -142,7 +142,7 @@ def checar_letras(senha):
         
 #--------------------------------------------------------------
 def nome_app(nome_txt):
-    analise = re.search(r'^[A-Za-z]+$',nome_txt)
+    analise = re.search(r'^[a-zA-Z]+$',nome_txt)
     if(analise):
         return True
     else:
@@ -178,7 +178,7 @@ def separar_versao(versao):
     return lista
 #--------------------------------------------------------------
 def plataforma(plataforma_txt):
-    analise = re.search(r'^\w+$',plataforma_txt)
+    analise = re.search(r'^[a-zA-Z]+$',plataforma_txt)
     if(analise):
         if(plataforma_valida(plataforma_txt)):
             return True
@@ -205,14 +205,15 @@ def separar_input(txt):
     return analise
 
 def sistema(string):
-    cont = 0
+    acm = True
     for i in range(len(string)):
         recebe_info = mandar_informacao(i,string[i])
         if(recebe_info == True):
-            cont += 1
+            cont = True
         else:
+            cont = False
             break
-    if(cont == len(string)):
+    if(cont == True):
         return True
     else:
         return False
