@@ -241,7 +241,9 @@ def mandar_informacao(i,string):
         return plataforma(string)
     if(i > 6):
         return presente(string)
-
-txt = str(input())
-string = separar_input(txt)
-print(sistema(string))
+try:
+    txt = str(input())
+    string = separar_input(txt)
+    print(sistema(string))
+except:
+    print(False)
